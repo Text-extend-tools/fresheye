@@ -1,0 +1,218 @@
+2002-06-29  Vadim Penzin  <penzin@attglobal.net>
+	
+	* Rewrote interactive "interface" along the lines set by DK. Now there
+	is a help summary and a 'default key' feature.
+	* --resume has no argument anymore and it is off by default.
+	* Fixed description of --context-size in fe's usage: no upper limit,
+	must be 2 at least.
+	* Word dictionary dump is sorted by the number of occurences, in
+	descending order. No unique words in output. Properly handles empty
+	files, as well as files having only one, or only two words in them.
+	If all words are unique, the entire word dictionary is dumped.
+	* Fixed building using Microsoft Developer Studio.
+	* Updated win32/README with information on Cygwin
+	* Merged win32/recode.dsw and win32/fe.dsw into win32/fe.dsw.
+	* Changed version to 1.3.7.
+
+2002-06-28  Vadim Penzin  <penzin@attglobal.net>
+
+	* Added --without-cygwin to configure.in. Since Cygwin does not
+	attempt to determine if debug version of Microsoft Runtime Library
+	is present on the system, --without-cygwin disables --enable-debug
+	and --enable-profile (which are meaningless in this context anyway).
+	* Streamlined getopt_long detection logic and handling.
+	* configure prints settings summary on exit.
+	
+2002-06-27  Vadim Penzin  <penzin@attglobal.net>
+
+	* Added --enable-encoding to configure.in. src/fe.c, src/lingtbl.c and
+	src/ui.c are not distributed anymore, configure creates these files from
+	src/fe.koi8-r, src/lingtbl.koi8-r and src/ui.koi8-r.
+	* Added platform detection at the build time.
+	* Fixed src/Makefile.am for Cygwin's $EXEEXT, separated generated files
+	from fe_SOURCES to nodist_fe_SOURCES and added them to MOSTLYCLEANFILES.
+	Now building from CVS requires automake-1.5.
+	* Changed default value of sensitivity threshold to 500.
+	* fe --version and ce --version print information about the platform
+	they were compiled on as well as default encoding which was set using
+	--enable-encoding.
+	* win32/*.dsp are broken for a while, will fix it later.
+	
+2002-06-27  Dmitry Kirsanov  <dmitry@kirsanov.com>
+
+	* src/lingtbl.c: changed information values for yo
+	* src/fe.c: broke infor() into two functions, infor_same() and
+	infor_diff()
+	* src/fe.c: in simwords(), added a step to decrease sim based on
+	infor_diff()
+	* src/fe.c: in set_count_coefficient() decreased divisor from 13 to 8
+	to sharpen dependance on wordcount information
+
+2002-06-08  Vadim Penzin  <penzin@attglobal.net>
+
+	* Moved README.win32 to win32/README, added win32/README to
+	EXTRA_DIST in win32/Makefile.am
+	* Removed win32/Makefile.mingw32
+	* Made error message issued when user provides no input more
+	informative, removed message issued when processing of a file begins
+	* Added win32/recode.dsw win32/recode.dsp
+	* Rewrote win32/README
+	* Fixed compilation errors on Win32
+	* Updated BUGS, wrote NEWS and TODO, added them to the distribution.
+
+2002-06-07  Vadim Penzin  <penzin@attglobal.net>
+
+	* Corrected creation year of original Fresh Eye in AUTHORS
+	* Added --enable-debug and --enable-profile for configure
+	* Fixed configure for platforms that do not have getopt_long
+	* Eliminated remaining #includes in headers
+
+2000-10-15  Vadim Penzin  <penzin@attglobal.net>
+
+	* Added automatic generation of config.h. Version changed to 1.3.6
+
+2000-10-07  Vadim Penzin  <penzin@attglobal.net>
+
+        * Added compilation of GNU's getopt on platforms
+	that do not have getopt_long. This change affected
+	configure.in and src/Makfile.am
+
+	* Fixed warnings issued by gcc on FreeBSD in getopt.c
+	
+	* Compiles and runs on FreeBSD. Version changed to 1.3.5
+	
+2000-10-05  Vadim Penzin  <penzin@attglobal.net>
+
+	* Added support for "yo". The similarity and quantity of
+	information coefficients are *copied* from "ye"
+
+	* Version changed to 1.3.4
+
+2000-10-02  Vadim Penzin  <penzin@attglobal.net>
+
+	* Changed #inclusion policy to "included files do not #include
+	other files".
+
+	* All warnings issued by -Wall eliminated
+	
+	* Added dos/fe.dsw, dos/ce.dsp, dos/fe.dsp
+
+	* Compiles with Microsoft Visual C 6.0 without warnings
+
+	* Version changed to 1.3.3
+
+2000-04-30  Vadim Penzin  <penzin@attglobal.net>
+
+	* src/ce.c: Added --strict
+
+1999-07-28  Vadim Penzin  <penzin@attglobal.net>
+
+	* Added wrappers.c, wrappers.h, utilities.c and utilities.h. 
+	All calls to fopen and fclose changed accordingly except for
+	check_log ().
+	
+	* Added empty context.c context.h
+	
+	* Wrote first version of README.win32
+	
+	* All files opened for reading are now closed
+
+1999-07-27  Vadim Penzin  <penzin@attglobal.net>
+
+	* Created dos/Makefile.gcc for use with Mingw32
+	
+1999-07-26  Vadim Penzin  <penzin@attglobal.net>
+
+	* Word mode removed, globals wordmode and wordwrap eliminated,
+	fgs (), nextword () and displ_help () changed accordingly.
+
+$Id: ChangeLog,v 1.11 2002/06/29 06:50:54 vadimp Exp $
+2002-06-26  Vadim Penzin  <penzin@attglobal.net>
+	
+	* --version prints platform type
+	* Added acconfig.h
+	* Removed src/config.h.in from CVS
+
+2002-06-21  Vadim Penzin  <penzin@attglobal.net>
+	
+	* Build fixes for NetBSD 1.5.2
+
+2002-06-08  Vadim Penzin  <penzin@attglobal.net>
+
+	* Moved README.win32 to win32/README, added win32/README to
+	EXTRA_DIST in win32/Makefile.am
+	* Removed win32/Makefile.mingw32
+	* Made error message issued when user provides no input more
+	informative, removed message issued when processing of a file begins
+	* Added win32/recode.dsw win32/recode.dsp
+	* Rewrote win32/README
+	* Fixed compilation errors on Win32
+	* Updated BUGS, wrote NEWS and TODO, added them to the distribution.
+
+2002-06-07  Vadim Penzin  <penzin@attglobal.net>
+
+	* Corrected creation year of original Fresh Eye in AUTHORS
+	* Added --enable-debug and --enable-profile for configure
+	* Fixed configure for platforms that do not have getopt_long
+	* Eliminated remaining #includes in headers
+
+2000-10-15  Vadim Penzin  <penzin@attglobal.net>
+
+	* Added automatic generation of config.h. Version changed to 1.3.6
+
+2000-10-07  Vadim Penzin  <penzin@attglobal.net>
+
+        * Added compilation of GNU's getopt on platforms
+	that do not have getopt_long. This change affected
+	configure.in and src/Makfile.am
+
+	* Fixed warnings issued by gcc on FreeBSD in getopt.c
+	
+	* Compiles and runs on FreeBSD. Version changed to 1.3.5
+	
+2000-10-05  Vadim Penzin  <penzin@attglobal.net>
+
+	* Added support for "yo". The similarity and quantity of
+	information coefficients are *copied* from "ye"
+
+	* Version changed to 1.3.4
+
+2000-10-02  Vadim Penzin  <penzin@attglobal.net>
+
+	* Changed #inclusion policy to "included files do not #include
+	other files".
+
+	* All warnings issued by -Wall eliminated
+	
+	* Added dos/fe.dsw, dos/ce.dsp, dos/fe.dsp
+
+	* Compiles with Microsoft Visual C 6.0 without warnings
+
+	* Version changed to 1.3.3
+
+2000-04-30  Vadim Penzin  <penzin@attglobal.net>
+
+	* src/ce.c: Added --strict
+
+1999-07-28  Vadim Penzin  <penzin@attglobal.net>
+
+	* Added wrappers.c, wrappers.h, utilities.c and utilities.h. 
+	All calls to fopen and fclose changed accordingly except for
+	check_log ().
+	
+	* Added empty context.c context.h
+	
+	* Wrote first version of README.win32
+	
+	* All files opened for reading are now closed
+
+1999-07-27  Vadim Penzin  <penzin@attglobal.net>
+
+	* Created dos/Makefile.gcc for use with Mingw32
+	
+1999-07-26  Vadim Penzin  <penzin@attglobal.net>
+
+	* Word mode removed, globals wordmode and wordwrap eliminated,
+	fgs (), nextword () and displ_help () changed accordingly.
+
+$Id: ChangeLog,v 1.11 2002/06/29 06:50:54 vadimp Exp $

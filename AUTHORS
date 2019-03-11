@@ -1,0 +1,7 @@
+Dmitry Kirsanov <dmitry@kirsanov.com> designed Fresh Eye
+and implemented original MS-DOS version in 1995.
+
+Vadim Penzin <penzin@attglobal.net> rewrote and ported Fresh Eye to 
+Linux, FreeBSD, OpenBSD and Win32 in 1999-2000.
+
+$Id: AUTHORS,v 1.2 2002/06/07 03:45:54 vadimp Exp $

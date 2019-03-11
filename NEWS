@@ -1,0 +1,36 @@
+This file describes changes made to Fresh Eye from one release to another.
+
+* Fresh Eye 1.4
+
+  Fresh Eye 1.4 features great performance and feature improvements over
+  its predcessor - Fresh Eye 1.21, released in November 1995:
+
+  - Fresh Eye 1.4 compiles and runs on a variety of platforms: Linux,
+    FreeBSD, OpenBSD, Sun Solaris, Win32, and Cygwin. We believe that
+    Fresh Eye can be compiled with no or little modifications on many
+    other platforms.
+
+  - Fresh Eye 1.4 supports virtually all major single-byte Russian
+    encodings: KOI8-R, CP-1251, CP-866, MacCyrillics, ISO 8859-5.
+
+  - Fresh Eye 1.4 imposes no artificial limitations on its input: length
+    of a word, length of a line, number of lines in a file, size of the
+    word dictionary, size of the context can be anything that fits in
+    computer's memory.
+
+  - Fresh Eye 1.4 is a true 32-bit application that is able to use all
+    available memory found on modern desktop systems.
+
+  - Fresh Eye undergone massive speed optimisations: now it processes
+    its input up to ten times faster than Fresh Eye 1.21 on the same
+    machine.
+  
+  - Fresh Eye 1.4 features a better command-line interface, which uses
+    GNU long options, and is able to process several files at once.
+  
+  MS-DOS is not supported anymore. The state of OS/2 port made by
+  K. Boyandin is unknown, link to his home page points nowhere.
+  Fresh Eye 1.4 breaks compatibility with the log file format of
+  Fresh Eye 1.21.
+
+$Id: NEWS,v 1.2 2002/06/08 18:32:01 vadimp Exp $

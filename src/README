@@ -1,0 +1,16 @@
+If you just fetched the source tree from a CVS repository, please use
+the following command to generate files that are needed for building:
+	aclocal && autoconf && autoheader && automake -a
+	
+Please refer to the file named INSTALL for building on UNIX or Cygwin.
+
+Please see win32/README for building on Win32.
+
+Please read the file README.Russian for general description of the program,
+the file is encoded using KOI8-R.
+
+Send suggestions for improvements to Dmitry Kirsanov <dmitry@kirsanov.com>
+Report bugs to Vadim Penzin <penzin@attglobal.net>
+Please make sure there are words 'Fresh Eye' in the Subject: line
+
+$Id: README,v 1.3 2002/06/26 00:27:47 vadimp Exp $

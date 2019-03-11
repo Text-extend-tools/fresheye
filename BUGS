@@ -1,0 +1,55 @@
+This file describes known deficiencies of Fresh Eye.
+
+* Fresh Eye imposes no artificial limitations neither on the size of
+  input files nor on the length of lines. Nevertheless, Fresh Eye by itself
+  is helpless if your system has small memory. In extremely rare, although
+  possible conditions of insufficient memory, Fresh Eye makes no attempts of
+  graceful recovery - it aborts processing. There are five ways to overcome
+  such situations:
+
+  - If the input file has many enormously long lines ('long' means more than
+    tens or hundreds of kilobytes, which is quite possible with
+    machine-generated HTML or texts having big paragraphs, which were
+    exported from word processors like Microsoft Word), it definitely makes
+    sense to re-format the file. While re-formatting, bear in mind that
+    Fresh Eye makes certain assumptions about text formatting, which affect
+    its computations. Please consult program documentation for details.
+  
+  - Split input file into smaller pieces. This will always help.
+  
+  - Try smaller context length (see --context-size option). This will make
+    Fresh Eye less precise.
+  
+  - Use larger swap space (or 'virtual memory', in Win32 parlance).
+  
+  - Buy more RAM.
+  
+* Messages issued by Fresh Eye are a mess - part of them in English,
+  part of them in Russian. 
+  
+* Fresh Eye ignores locale settings, using its own default encoding for
+  Russian messages.
+  
+* If resume is enabled (--resume=y) and fresheye.log contains information
+  about more than one pass over the same particular file then fe uses
+  information of the first pass for resuming.
+
+* Fresh Eye does not detect encoding of its log files, assuming they are
+  encoded using its own default encoding. It means that a log file produced
+  on Win32 using CP-866 cannot be processed "as is" on UNIX, where KOI8-R
+  is the default encoding - Fresh Eye will skip over all entries found in
+  this file.
+
+* 'ce' code page conversion utility cannot be used for general conversion
+  tasks because it ignores non-letters, for instance, it does not attempt to
+  convert pseudo-graphic characters.
+
+Please send suggestions for improvements or new features to
+Dmitry Kirsanov <dmitry@kirsanov.com>. Please make sure there are words
+'Fresh Eye' in the Subject: line.
+
+If you think that you discovered a bug, please report it to
+Vadim Penzin <penzin@attglobal.net>. Please make sure there are words
+'Fresh Eye' in the Subject: line.
+
+$Id: BUGS,v 1.2 2002/06/08 18:32:01 vadimp Exp $

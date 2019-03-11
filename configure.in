@@ -1,0 +1,155 @@
+dnl $Id: configure.in,v 1.8 2002/06/29 05:22:13 vadimp Exp $
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(src/fe.h)
+AM_INIT_AUTOMAKE(fe, 1.3.7)
+
+dnl Check platform 
+AC_CANONICAL_HOST
+AC_DEFINE_UNQUOTED(PLATFORM,"$host",[Specifies platform type])
+
+dnl Checks for programs.
+AC_PROG_AWK
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_LN_S
+
+dnl Checks for libraries.
+AC_CHECK_LIB(m, sqrt)
+AC_CHECK_FUNC(getopt_long, HAVE_GETOPT_LONG=true, HAVE_GETOPT_LONG=false)
+
+dnl Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS(unistd.h string.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+
+dnl Checks for library functions.
+AC_CHECK_FUNCS(strdup strerror strstr)
+
+AM_CONFIG_HEADER(src/config.h)
+
+dnl Checks for user-supplied arguments
+AC_ARG_ENABLE(debug,
+	[  --enable-debug          Turn on debugging],
+	[case "${enableval}" in
+		yes) debug=true ;;
+		no)  debug=false ;;
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
+	esac],[debug=false])
+
+AC_ARG_ENABLE(profile,
+	[  --enable-profile        Turn on profiling],
+	[case "${enableval}" in
+		yes) profile=true ;;
+		no)  profile=false ;;
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-profile) ;;
+	esac],[profile=false])
+
+encoding="CYR_CP_KOI8_R"
+encoding_name="koi8-r"
+AC_ARG_ENABLE(encoding,
+	[  --enable-encoding=CP    Set default Cyrillic codepage. CP must be one of:
+                          koi8-r (default), cp1251, cp866, mac, iso8859-5],
+	[case "${enableval}" in
+		koi8-r)
+			encoding="CYR_CP_KOI8_R"
+			encoding_name="koi8-r"
+			;;
+		cp866)
+			encoding="CYR_CP_CP866"
+			encoding_name="cp866"
+			;;
+		cp1251)
+			encoding="CYR_CP_CP1251"
+			encoding_name="cp1251"
+			;;
+		mac)
+			encoding="CYR_CP_MAC"
+			encoding_name="mac"
+			;;
+		iso8859-5)
+			encoding="CYR_CP_ISO_8859_5"
+			encoding_name="iso8859-5"
+			;;
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-encoding) ;;
+	esac],[])
+
+case $host_os in
+	*cygwin* )
+		AC_ARG_WITH(cygwin,
+		[  --without-cygwin        Disable linking with Cygwin DLLs,
+		          implies --disable-debug --disble-profile],
+		[case "${withval}" in
+			no)
+				no_cygwin=true
+				debug=false
+				profile=false
+				HAVE_GETOPT_LONG=false
+				LIBS=
+				;;
+			*) ;;
+		 esac], [no_cygwin=false])
+		;;
+esac
+
+AM_CONDITIONAL(COMPILE_GNU_GETOPT, test x$HAVE_GETOPT_LONG = xfalse)
+AC_DEFINE_UNQUOTED(CYR_CP_DEFAULT, $encoding, [Default Cyrillic code page])
+AC_DEFINE_UNQUOTED(CYR_CP_NAME, "$encoding_name",
+	[The name of default Cyrillic code page])
+AM_CONDITIONAL(NO_CYGWIN, test x$no_cygwin = xtrue)
+AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
+AM_CONDITIONAL(PROFILE, test x$profile = xtrue)
+
+AC_OUTPUT( Makefile src/Makefile win32/Makefile )
+
+if test "${debug}" = true
+then
+	debug_setting="enabled"	
+else
+	debug_setting="disabled"
+fi
+
+if test "${profile}" = true
+then
+	profile_setting="enabled"
+else
+	profile_setting="disabled"
+fi
+
+case $encoding_name in
+	koi8-r) encoding_setting="KOI8-R";;
+	cp1251) encoding_setting="Windows CP-1251";;
+	cp866) encoding_setting="MS-DOS CP-866";;
+	mac) encoding_setting="MacCyrillic";;
+	iso8859-5) encoding_setting="ISO 8859-5";;
+esac
+
+cat <<-EOF
+
+Configuration of Fresh Eye's source tree is completed.
+
+    * Debugging is $debug_setting.
+    * Profiling is $profile_setting.
+    * Default Cyrillic code page is $encoding_setting.
+EOF
+
+if test "${no_cygwin}" = true
+then
+	echo "    * Cygwin is disabled, Fresh Eye will use Microsoft C Runtime Library."
+fi
+if test "${host_os}" = cygwin -a "${no_cygwin}" = false
+then
+	echo "    * Cygwin is enabled, Fresh Eye will use POSIX layer that Cygwin provides."
+fi
+
+cat <<-EOF
+
+If you are satisfied with these settings, please run 'make' and then
+'make install'. Depending on your environment, you may need to become
+super user before running 'make install'.
+
+Thank you for using Fresh Eye.
+EOF

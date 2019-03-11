@@ -1,0 +1,21 @@
+This file describes features that we would like to implement in the future,
+in random order:
+
+* Automatic generation of binary packages for various UNIX packaging systems
+  (DEB, RPM etc).
+* Installer for Win32.
+* Unicode support, UTF-8 in particular.
+* Implement '-O' option for changing encoding of output produced by
+  Fresh Eye (Now it is #ifdef'ed out in src/ui.c).
+* Use XML for the log file.
+* Use GNU gettext for message translation and locale-aware functionality.
+  (Can it be done on Win32?)
+* Write a man page and/or texinfo documentation.
+* Embedding API that would allow for integration of Fresh Eye into e-mail
+  clients, text editors and word processors.
+* More ports: Max OS X, HURD.
+
+If you wish to participate, please contact 
+Dmitry Kirsanov <dmitry@kirsanov.com> or Vadim Penzin <penzin@attglobal.net>
+
+$Id: TODO,v 1.1 2002/06/08 18:32:55 vadimp Exp $

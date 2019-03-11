@@ -1,0 +1,74 @@
+This file describes how to build Fresh Eye on a Win32 platform.
+
+In general, there are two ways of building Fresh Eye on a Win32 platform
+that we support at the time of this writing:
+- Using Cygwin.
+- Using Microsoft Developer Studio. 
+
+0. Building Fresh Eye using Cygwin
+
+Pre-requisites:
+	Latest distribution of Cygwin. Cygwin is freely available at
+	the following address: http://www.cygwin.com/
+
+Build process on Cygwin does not differ much from any other UNIX-like
+platform, as described in the INSTALL file. A typical installation sequence 
+would be:
+	./configure --enable-encoding=cp866
+	make
+	make install
+
+However, there are some Cygwin-specific details. Executables built using
+Cygwin depend on cygwin1.dll, a Cygwin POSIX layer. Besides adding a
+dependency affecting distribution process (one must supply cygwin1.dll
+together with every Cygwin-made executable), binaries that use POSIX
+layer run considerably slower, which is not acceptable for Fresh Eye. In
+addition, executables produced using Cygwin are covered by the GPL.
+While this fact has no influence on Fresh Eye, which is distributed
+under GPL itself, it becomes important in a proprietary environment.
+
+Fresh Eye addresses dependency on Cygwin POSIX layer by using a special 
+GCC option `-mno-cygwin', which disables POSIX layer and creates object
+files that depend on Microsoft C Runtime Library distributed with Windows.
+To enable this option, specify --without-cygwin while invoking `configure':
+	
+	./configure --without-cygwin --enable-encoding=cp866
+
+and then proceed as usual. Since Cygwin does not detect debug version of
+Microsoft C Runtime Library, configuring with `--without-cygwin'
+automatically disables debugging and profiling, even if they were
+requested using `--enable-debug' and `--enable-profile'.
+
+1. Building Fresh Eye using Microsoft Developer Studio
+
+Pre-requisites:
+	Microsoft Developer Studio 6.0 with Service Pack 5 applied.
+
+(The above does not mean that you must apply SP5 to Developer Studio,
+it is the version we used to build and test Fresh Eye on Win32.)
+
+If you wish Fresh Eye to use other encoding than CP-866 by default, you
+will need to modify src\config-win32.h: change the value of CYR_CP_DEFAULT
+from CYR_CP_866 to a value listed in the first enum in
+src\cyrillic.h. Also, do not forget to change the value of CYR_CP_NAME.
+Please note, that this will change encoding of the messages issued by
+Fresh Eye during run time as well as encoding of its log file.
+
+To build Fresh Eye, please complete the following steps:
+
+	0. Open workspace file named fe.dsw using Developer Studio.
+	1. Change active configuration to "fe - Win32 Debug" for
+	   building with debugging information or "fe - Win32 Release"
+	   for building without debugging information.
+	   (Build -> Set Active Configuration).
+	2. Perform a Build (Build -> Build)
+
+Executable named fe.exe will appear in win32\Debug for builds with
+debugging information or in win32\Release for builds without debugging
+information.
+
+If you think that you discovered a bug, please report it to
+Vadim Penzin <penzin@attglobal.net>. Please make sure there are words
+'Fresh Eye' in the Subject: line.
+
+$Id: README,v 1.4 2002/06/29 06:49:25 vadimp Exp $
