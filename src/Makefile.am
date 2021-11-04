@@ -46,7 +46,7 @@ ce_SOURCES =	ce.c \
 		$(GNU_GETOPT_SRC)
 
 EXTRA_DIST =	getopt.h getopt.c getopt1.c config-win32.h \
-		ui.koi8-r lingtbl.koi8-r fe.koi8-r
+		ui.koi8-r
 
 MOSTLYCLEANFILES = $(GENERATED_FILES)
 
